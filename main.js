@@ -4,6 +4,7 @@ window.id = 0;
 if(!AlumnosBD){
     alert("Su Navegador no soporta SQLWeb");
 }
+
 var appVue = new Vue({
     el:'#appAlumnos',
     data:{
@@ -113,10 +114,6 @@ var appVue = new Vue({
         });
         this.obtenerAlumnos();
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 6359b04336058958bdd69a26ad868c75e0aa9ed5
-
-    
+},
     });
