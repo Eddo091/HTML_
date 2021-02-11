@@ -120,6 +120,7 @@ var appVue = new Vue({
                 let req=event.target.result,
                     tblAlumnos = req.createObjectStore('tblalumnos',{keyPath:'idAlumno'});
                 tblAlumnos.createIndex('idAlumno','idAlumno',{unique:true});
+        //Le hace falta los demás 
                 tblAlumnos.createIndex('codigo','codigo',{unique:false});
             };
             indexDb.onsuccess = evt=>{
