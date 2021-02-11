@@ -1,7 +1,7 @@
 var generarIdUnicoDesdeFecha=()=>{
     let fecha = new Date();//03/02/2021
     return Math.floor(fecha.getTime()/1000).toString(16);
-}, db;
+}, db_alumnos;
 var appVue = new Vue({
    el:'#appAlumnos',
     data:{
@@ -12,20 +12,20 @@ var appVue = new Vue({
         buscar : "",
        alumno:{
             idAlumno  : 0,
-            codigo      : '',
-            nombre : '',
-            dirección      : '',
-            municipio      : '',
-            departamento         : '',
-            telefono      : '',
+            codigo    : '',
+            nombre    : '',
+            dirección : '',
+            municipio : '',
+            departamento : '',
+            telefono  : '',
             fechaNacimiento      : '',
-            sexo        : ''
+            sexo      : ''
         },
-        alumn:[]
+        alumno:[]
     },
     methods:{
         buscandoAlumnos(){
-            this.alumnos = this.alumnos.filter((element,index,alumnos) => element.descripcion.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
+            this.alumno = this.alumno.filter((element,index,alumno) => element.descripcion.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
             if( this.buscar.length<=0){
                 this.obtenerAlumnos();
             }
@@ -39,7 +39,7 @@ var appVue = new Vue({
             let store = this.abrirStore("tblalumnos",'readwrite'),
                 duplicado = false;
             if( this.accion=='nuevo' ){
-                this.producto.idAlumno = generarIdUnicoDesdeFecha();
+                this.alumno.idAlumno = generarIdUnicoDesdeFecha();
 
                 let index = store.index("codigo"),
                     data = index.get(this.alumno.codigo);
@@ -90,26 +90,26 @@ var appVue = new Vue({
         },
         limpiar(){
             this.accion='nuevo';
-            this.alumnos.idAlumno='';
-            this.alumnos.codigo='';
-            this.alumnos.nombre='';
-            this.alumnos.dirección='';
-            this.alumnos.municipio='';
-            this.alumnos.departamento='';
-            this.alumnos.telefono='';
-            this.alumnos.fechaNacimiento='';
-            this.alumnos.sexo='';
+            this.alumno.idAlumno='';
+            this.alumno.codigo='';
+            this.alumno.nombre='';
+            this.alumno.dirección='';
+            this.alumno.municipio='';
+            this.alumno.departamento='';
+            this.alumno.telefono='';
+            this.alumno.fechaNacimiento='';
+            this.alumno.sexo='';
         },
         eliminarProducto(alum){
-            if( confirm(`Esta seguro que desea eliminar el producto:  ${alum.nombre}`) ){
+            if( confirm(`Esta seguro que desea eliminar el Alumno:  ${alum.codigo}`) ){
                 let store = this.abrirStore("tblalumnos",'readwrite'),
-                    req = store.delete(pro.idProducto);
+                    req = store.delete(pro.idAlumno);
                 req.onsuccess=resp=>{
-                    this.mostrarMsg('Registro eliminado con exito',true);
+                    this.mostrarMsg('Alumno eliminado con exito',true);
                     this.obtenerAlumnos();
                 };
                 req.onerror=resp=>{
-                    this.mostrarMsg('Error al eliminar el registro',true);
+                    this.mostrarMsg('Error al eliminar el Alumno',true);
                     console.log( resp );
                 };
             }
@@ -123,7 +123,7 @@ var appVue = new Vue({
                 tblAlumnos.createIndex('codigo','codigo',{unique:false});
             };
             indexDb.onsuccess = evt=>{
-                db=evt.target.result;
+                db_alumnos=evt.target.result;
                 this.obtenerAlumnos();
             };
             indexDb.onerror=e=>{
@@ -131,7 +131,7 @@ var appVue = new Vue({
             };
         },
         abrirStore(store,modo){
-            let tx = db.transaction(store,modo);
+            let tx = db_alumnos.transaction(store,modo);
             return tx.objectStore(store);
         }
     },
