@@ -77,8 +77,6 @@
                         <div class="col-sm text-center">
                             <input type="submit" value="Guardar" class="btn btn-dark">
                             <input type="reset" value="Limpiar" class="btn btn-warning">
-                            <input type="button" @click="modificarAlumno(alum)"  value="Modificar" class="btn btn-dark">
-                             <input type="button" @click="eliminarAlumno(alum.idAlumno)" value="Eliminar" class="btn-warning">
                         </div>
                     </div>
                     <div class="row p-2">
@@ -99,12 +97,12 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <table class="tble table-sm">
+                            <table class="table table-sm table-hover">
                                 <thead>
                                     <tr>
                                         <!----------BUSCAR------->
                                         <td colspan="5">
-                                            <input v-model="buscar" v-on:keyup="buscandoAlumno" type="text" class="form-control form-control-sm" placeholder="Buscar Alumnos"> 
+                                            <input v-model="buscar" v-on:keyup="buscandoAlumnos" type="text" class="form-control form-control-sm" placeholder="Buscar Alumnos"> 
                                             
                                         </td>
                                     </tr>
@@ -123,7 +121,7 @@
                                 </thead>
                                 <tbody>
                                     <!----------ACCION DE LA TABLA------->
-                                    <tr v-for="alum in alumnos" v-on:click="mostrarAlumno(alum)">
+                                    <tr v-for="alum in alumnos" v-on:click="mostrarAlumnos(alum)">
                                         <td>{{alum.codigo }}</td>
                                         <td>{{alum.nombre }}</td>
                                         <td>{{alum.dirección }}</td>
@@ -136,8 +134,7 @@
 
                                         <td>
                                             <!----------BOTONES TABLA------->
-                                            <button @click="modificarAlumno(alum)" class="btn btn-info">MODI</button>
-                                            <button @click="eliminarAlumno(alum.idAlumno)" class="btn btn-danger">DEL</button>
+                                            <a @click.stop="eliminarAlumnos(alum.idAlumno)" class="btn btn-danger">DEL</a>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -1,14 +1,11 @@
-var AlumnosBD = openDatabase('dbAlumnos','1.0','Registro de Alumnos',5*1024*1024);
-
-window.id = 0;
-if(!AlumnosBD){
-    alert("Su Navegador no soporta SQLWeb");
-}
-
+var generarIdUnicoDesdeFecha=()=>{
+    let fecha = new Date();//03/02/2021
+    return Math.floor(fecha.getTime()/1000).toString(16);
+}, db;
 var appVue = new Vue({
-    el:'#appAlumnos',
+   el:'#appAlumnos',
     data:{
-        /*accion : 'nuevo',*/
+        accion : 'nuevo',
         msg    : '',
         status : false,
         error  : false,
@@ -24,67 +21,73 @@ var appVue = new Vue({
             fechaNacimiento      : '',
             sexo        : ''
         },
-        alumno:[]
-    
+        alumn:[]
     },
-    
     methods:{
-
-        guardarAlumno(){
-            AlumnosBD.transaction(tran=>{
-                tran.executeSql('INSERT into alum alumnos(idAlumno,codigo,nombre,direccion,municipio,departamento,telefono,fechaNacimiento,sexo) VALUES(?,?,?,?,?,?,?,?,?)', 
-                [++id,this.alum.codigo,this.alum.nombre,this.alum.direccion,this.alum.municipio,this.alum.departamento,this.alum.telefono,this.alum.fechaNacimiento,this.alum.sexo]);
-                this.obtenerAlumnos();
-                this.limpiar();
-  
-                this.msg = 'Alumno Guardado con exito.';
-                this.error = false;
-  
-            }, ex=>{
-                console.log(ex);
-              });
-          },
-             modificarAlumno:function(alumno){
-              appAlumnos.alumno = alumno;
-              appAlumnos.alumno.accion = 'modificar';
-              console.log("dato",alumno);
-              
-             },
         buscandoAlumnos(){
             this.alumnos = this.alumnos.filter((element,index,alumnos) => element.descripcion.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
             if( this.buscar.length<=0){
                 this.obtenerAlumnos();
             }
         },
-        
-        
+        guardarAlumno(){
+            /**
+             * webSQL -> DB Relacional en el navegador
+             * localStorage -> BD NOSQL clave/valor
+             * indexedDB -> BD NOSQL clave/valor
+             */
+            let store = this.abrirStore("tblalumnos",'readwrite'),
+                duplicado = false;
+            if( this.accion=='nuevo' ){
+                this.producto.idAlumno = generarIdUnicoDesdeFecha();
 
-        eliminarAlumno:function(idAlumno){
-            if(confirm("Estas seguro de eliminar este registro?")){
-                fetch(`private/Modulo/alumnos/procesos.php?proceso=eliminarAlumno&alumno=${idAlumno}`).then(resp=>resp.json()).then(resp=>{
-                    this.buscarAlumno();
-                });
-                
-            
-            }  
-    },
-        
-        obtenerAlumnos(){
-        AlumnosBD.transaction(tran=>{
-                tran.executeSql('SELECT * FROM alumnos',[],(index,data)=>{
-                    this.alumnos = data.rows;
-                    id=data.rows.length;
-                });
-            }, err=>{
-                console.log( err );
-            });
+                let index = store.index("codigo"),
+                    data = index.get(this.alumno.codigo);
+                data.onsuccess=evt=>{
+                    duplicado = evt.target.result!=undefined;
+                };
+            }
+            if( duplicado==false){
+                let query = store.put(this.alumno);
+                query.onsuccess=event=>{
+                    this.obtenerAlumnos();
+                    this.limpiar();
+                    
+                    this.mostrarMsg('Alumno se guardo con exito',false);
+                };
+                query.onerror=event=>{
+                    this.mostrarMsg('Error al guardar el Alumno',true);
+                    console.log( event );
+                };
+            } else{
+                this.mostrarMsg('Codigo del estudiante duplicado',true);
+            }
         },
-
-        mostrarAlumno(alum){
-            this.alumnos=alum;
+        mostrarMsg(msg, error){
+            this.status = true;
+            this.msg = msg;
+            this.error = error;
+            this.quitarMsg(3);
         },
-
+        quitarMsg(time){
+            setTimeout(()=>{
+                this.status=false;
+                this.msg = '';
+                this.error = false;
+            }, time*1000);
+        }, 
        
+        obtenerAlumnos(){
+            let store = this.abrirStore('tblalumnos','readonly'),
+                data = store.getAll();
+            data.onsuccess=resp=>{
+                this.alumnos = data.result;
+            };
+        },
+        mostrarAlumnos(alum){
+            this.alumnos = alum;
+            this.accion='modificar';
+        },
         limpiar(){
             this.accion='nuevo';
             this.alumnos.idAlumno='';
@@ -97,23 +100,42 @@ var appVue = new Vue({
             this.alumnos.fechaNacimiento='';
             this.alumnos.sexo='';
         },
-        eliminarAlumno(alum){
-           AlumnosBD.transaction(tran=>{
-                tran.executeSql('DELETE FROM alumnos WHERE idAlumno=0');
-                  
-                
-            }, err=>{
-                console.log( err );
-            });
+        eliminarProducto(alum){
+            if( confirm(`Esta seguro que desea eliminar el producto:  ${alum.nombre}`) ){
+                let store = this.abrirStore("tblalumnos",'readwrite'),
+                    req = store.delete(pro.idProducto);
+                req.onsuccess=resp=>{
+                    this.mostrarMsg('Registro eliminado con exito',true);
+                    this.obtenerAlumnos();
+                };
+                req.onerror=resp=>{
+                    this.mostrarMsg('Error al eliminar el registro',true);
+                    console.log( resp );
+                };
+            }
         },
+        abrirBd(){
+            let indexDb = indexedDB.open('db_alumnos',1);
+            indexDb.onupgradeneeded=event=>{
+                let req=event.target.result,
+                    tblAlumnos = req.createObjectStore('tblalumnos',{keyPath:'idAlumno'});
+                tblAlumnos.createIndex('idAlumno','idAlumno',{unique:true});
+                tblAlumnos.createIndex('codigo','codigo',{unique:false});
+            };
+            indexDb.onsuccess = evt=>{
+                db=evt.target.result;
+                this.obtenerAlumnos();
+            };
+            indexDb.onerror=e=>{
+                console.log("Error al conectar a la BD", e);
+            };
+        },
+        abrirStore(store,modo){
+            let tx = db.transaction(store,modo);
+            return tx.objectStore(store);
+        }
+    },
     created(){
-        AlumnosBD.transaction(tran=>{
-            tran.executeSql('CREATE TABLE IF NOT EXISTS alumnos(idAlumno int PRIMARY KEY NOT NULL, codigo varchar(5), nombre varchar(65),direccion varchar(65), municipio varchar(15),departamento varchar(15),telefono varchar(9),fechanacimiento varchar(15),sexo varchar(10))');
-        }, err=>{
-            console.log( err );
-        });
-        this.obtenerAlumnos();
+        this.abrirBd();
     }
-
-},
-    });
+});
