@@ -100,10 +100,10 @@ var appVue = new Vue({
             this.alumno.fechaNacimiento='';
             this.alumno.sexo='';
         },
-        eliminarProducto(alum){
+        eliminarAlumno(alum){
             if( confirm(`Esta seguro que desea eliminar el Alumno:  ${alum.codigo}`) ){
                 let store = this.abrirStore("tblalumnos",'readwrite'),
-                    req = store.delete(pro.idAlumno);
+                    req = store.delete(alum.idAlumno);
                 req.onsuccess=resp=>{
                     this.mostrarMsg('Alumno eliminado con exito',true);
                     this.obtenerAlumnos();

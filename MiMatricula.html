@@ -34,10 +34,11 @@
             </div>
         </div>
     </nav>
-    <div class="col-sm p-3 text-light text-center">
-        <p class="text-warning h3">	Matricula</p>
-        
-    </div>
+    <div id="appSistema" class="container-fluid">
+        <component-materia v-if="mostrarMatricula"></component-materia>
 
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="main.js"></script>
+    <script src="Materia.js"></script>
     </body>
 </html>
