@@ -29,7 +29,7 @@ Vue.component('component-alumnos',{
                  this.obtenerAlumnos();
              }
          },
-         buscandoCodigoProducto(store){
+         buscandoCodigoAlumnos(store){
             let buscarCodigo = new Promise( (resolver,rechazar)=>{
                 let index = store.index("codigo"),
                     data = index.get(this.alumno.codigo);
@@ -92,7 +92,7 @@ Vue.component('component-alumnos',{
                 this.alumno = data.result;
             };
         },
-        mostrarProducto(alum){
+        mostrarAlumnos(alum){
             this.alumno = pro;
             this.accion='modificar';
         },

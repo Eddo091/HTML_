@@ -118,10 +118,10 @@ var appVue = new Vue({
             let indexDb = indexedDB.open('db_alumnos',1);
             indexDb.onupgradeneeded=event=>{
                 let req=event.target.result,
-                    tblAlumnos = req.createObjectStore('tblalumnos',{keyPath:'idAlumno'});
-                tblAlumnos.createIndex('idAlumno','idAlumno',{unique:true});
+                    tblalumnos = req.createObjectStore('tblalumnos',{keyPath:'idAlumno'});
+                tblalumnos.createIndex('idAlumno','idAlumno',{unique:true});
         //Le hace falta los demás 
-                tblAlumnos.createIndex('codigo','codigo',{unique:false});
+                tblalumnos.createIndex('codigo','codigo',{unique:false});
             };
             indexDb.onsuccess = evt=>{
                 db_alumnos=evt.target.result;
@@ -131,9 +131,9 @@ var appVue = new Vue({
                 console.log("Error al conectar a la BD", e);
             };
         },
-        abrirStore(store,modo){
-            let tx = db_alumnos.transaction(store,modo);
-            return tx.objectStore(store);
+        abrirStore(storeA,modo){
+            let tx = db_alumnos.transaction(storeA,modo);
+            return tx.objectStore(storeA);
         }
     },
     created(){
