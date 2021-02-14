@@ -41,11 +41,13 @@
             <div class="row">
                 <div class="col-sm-5">
                     <div class="row p-2">
+                    
                         <div class="col-sm text-center text-white bg-primary">
                             <h5>REGISTRO DE ALUMNO</h5>
                         </div>
                     </div>
-                    <div class="row p-2">
+                    <div class="input-group-prepend card bg-light">
+                    <div class="row p-2" >
                         <div class="col-sm">CODIGO:</div>
                         <div class="col-sm">
                             <input v-model="alumno.codigo"  required pattern="[A-Z Ñña-z]{3}[0-9]{6}" class="form-control form-control-sm"  placeholder="Ejem: ABC123456">
@@ -84,7 +86,7 @@
 
                     <div class="row p-2">
                             <div div class="col-sm">FECHA DE NACIMIENTO:</div>
-                            <div class="col-sm">
+                             <div class="col-sm">
                                 <input v-model="alumno.fechaNacimiento" required pattern="{0000-00-00}"  type="date" class="form-control form-control-sm">
                         </div>
                     </div>
@@ -94,13 +96,16 @@
                         <div class="col-sm">
                             <input v-model="alumno.sexo" required pattern= "[F/M f/m]{1}" type="text" type="text" class="form-control form-control-sm" placeholder="M/F">
                         </div>
+                        
                     </div>
+                </div>
+                   
 
 <!----------BOTONES GUARDAR,LIMPIAR,MODIFICAR, ELIMINAR------->
                     <div class="row p-2">
                         <div class="col-sm text-center">
-                            <input type="submit" value="Guardar"  class="btn btn-dark" >
-                            <input type="reset" value="Limpiar" class="btn btn-warning">
+                            <input type="submit" value="Guardar"  class="btn btn-outline-dark" >
+                            <input type="reset" value="Limpiar" class="btn btn-outline-warning">
                         </div>
                     </div>
                     <div class="row p-2">
@@ -120,6 +125,7 @@
                         <div class="col"><h5>ALUMNOS REGISTRADOS</h5></div>
                     </div>
                     <div class="row">
+                        <div class="input-group-prepend card bg-light"> 
                         <div class="col">
                             <table class="table table-sm table-hover">
                                 <thead>
@@ -158,11 +164,12 @@
 
                                         <td>
                                             <!----------BOTONES TABLA------->
-                                            <a @click.stop="eliminarAlumnos(alum.idAlumno)" class="btn btn-danger">DEL</a>
+                                            <a @click.stop="eliminarAlumnos(alum.idAlumno)" class="btn btn-outline-danger">DEL</a>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
                         </div>
                     </div>
                 </div>
