@@ -1,6 +1,6 @@
 <!-- HTML -> Lenguaje de Marcacion de Hipertexto -->
 <!DOCTYPE html><!--Definimos el tipo de documento vamos a utilizar -->
-<html lang="es"><!-- Establecemos el idioma -->
+<html lang="es" ><!-- Establecemos el idioma -->
 <head><!-- Define la cabecera del documento -->
     <meta charset="UTF-8"><!-- Definimos la codificacion del documento  -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,8 +9,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 </head>
 <body> <!-- Cuerpo de mi documento -->
-
-
 
        <!-- NAVBAR-->
     
@@ -109,13 +107,15 @@
                         </div>
                     </div>
                     <div class="row p-2">
-                        <div class="col-sm text-center">
+                        <div class="col-sm text-center ">
                             <div v-if="status" class="alert" v-bind:class="[error ? 'alert-danger' : 'alert-success']">
                                 {{ msg }}
                             </div>
                         </div>
                     </div>
+                    
                 </div>
+            
 
 
                 <!----------ALUMNOS REGISTRADOS------->
@@ -152,12 +152,12 @@
                                 <tbody>
                                     <!----------ACCION DE LA TABLA------->
                                     <tr v-for="alum in alumno" v-on:click="mostrarAlumnos(alum)">
-                                        <td>{{alum.codigo }}</td>
-                                        <td>{{alum.nombre }}</td>
-                                        <td>{{alum.dirección }}</td>
-                                        <td>{{alum.municipio }}</td>
-                                        <td>{{alum.departamento }}</td>
-                                        <td>{{alum.telefono }}</td>
+                                        <td>{{alum.codigo}}</td>
+                                        <td>{{alum.nombre}}</td>
+                                        <td>{{alum.dirección}}</td>
+                                        <td>{{alum.municipio}}</td>
+                                        <td>{{alum.departamento}}</td>
+                                        <td>{{alum.telefono}}</td>
                                         <td>{{alum.fechaNacimiento}}</td>
                                         <td>{{alum.sexo}}</td>
                                         
@@ -176,9 +176,10 @@
             </div>
         </form>
     </div>
-
+    <div class="shadow-lg p-3 mb-5 bg-white rounded text-center">Todo Siempre será Un Cambio de Planes</div>
+    
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-    <script src="main.js"></script>
-    <script src="styles.css"></script>
+    <script src="main.js"></script>        
+  
 </body>
 </html>

@@ -81,11 +81,11 @@ var appVue = new Vue({
             let store = this.abrirStore('tblalumnos','readonly'),
                 data = store.getAll();
             data.onsuccess=resp=>{
-                this.alumnos = data.result;
+                this.alumno = data.result;
             };
         },
         mostrarAlumnos(alum){
-            this.alumnos = alum;
+            this.alumno = alum;
             this.accion='modificar';
         },
         limpiar(){
