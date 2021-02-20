@@ -159,6 +159,9 @@ Vue.component('component-alumnos',{
                  <div class="col-sm text-center text-white bg-primary">
                      <h5>REGISTRO DE ALUMNO</h5>
                  </div>
+                 <div class="col-1 align-middle" >
+                 <button type="button" onclick="appVue.forms['alumno'].mostrar=false" class="btn-close" aria-label="Close"></button>
+             </div>
              </div>
              <div class="row p-2">
                         <div class="col-sm">MATERIA:</div>

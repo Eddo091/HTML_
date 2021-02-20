@@ -15,7 +15,7 @@ Vue.component('component-materias',{
         }
     },
     methods:{
-        buscandoCategoria(){
+        buscandoMateria(){
             this.materias = this.materias.filter((element,index,materias) => element.docente.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
             if( this.buscar.length<=0){
                 this.obtenerMaterias();
@@ -34,7 +34,7 @@ Vue.component('component-materias',{
             });
             return buscarMateria;
         },
-        async guardarCategoria(){
+        async guardarMateria(){
             /**
              * webSQL -> DB Relacional en el navegador
              * localStorage -> BD NOSQL clave/valor
@@ -95,7 +95,7 @@ Vue.component('component-materias',{
             this.materia.docente='';
             this.obtenerMaterias();
         },
-        eliminarCategoria(ma){
+        eliminarMateria(ma){
             if( confirm(`Esta seguro que desea eliminar el materia:  ${ma.docente}`) ){
                 let store = this.abrirStore("tblmaterias",'readwrite'),
                     req = store.delete(ma.idMateria);
@@ -118,7 +118,7 @@ Vue.component('component-materias',{
         //this.obtenerMaterias();
     },
     template:`
-        <form v-on:submit.prevent="guardarCategoria" v-on:reset="limpiar">
+        <form v-on:submit.prevent="guardarMateria" v-on:reset="limpiar">
             <div class="row">
                 <div class="col-sm-5">
                     <div class="row p-2">
@@ -170,7 +170,7 @@ Vue.component('component-materias',{
                                 <thead>
                                     <tr>
                                         <td colspan="5">
-                                            <input v-model="buscar" v-on:keyup="buscandoCategoria" type="text" class="form-control form-contro-sm" placeholder="Buscar materias">
+                                            <input v-model="buscar" v-on:keyup="buscandoMateria" type="text" class="form-control form-contro-sm" placeholder="Buscar materias">
                                         </td>
                                     </tr>
                                     <tr>
@@ -184,7 +184,7 @@ Vue.component('component-materias',{
                                         <td>{{ ma.codigo }}</td>
                                         <td>{{ ma.docente }}</td>
                                         <td>
-                                            <a @click.stop="eliminarCategoria(ma)" class="btn btn-danger">DEL</a>
+                                            <a @click.stop="eliminarMateria(ma)" class="btn btn-danger">DEL</a>
                                         </td>
                                     </tr>
                                 </tbody>

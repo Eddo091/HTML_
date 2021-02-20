@@ -36,7 +36,7 @@ Vue.component('component-inscripcion',{
             });
             return buscarCodigo;
         },
-        async guardarCliente(){
+        async guardarInscripcion(){
             /**
              * webSQL -> DB Relacional en el navegador
              * localStorage -> BD NOSQL clave/valor
@@ -122,14 +122,14 @@ Vue.component('component-inscripcion',{
         //this.obtenerDatos();
     },
     template:`
-        <form v-on:submit.prevent="guardarCliente" v-on:reset="limpiar">
+        <form v-on:submit.prevent="guardarInscripcion" v-on:reset="limpiar">
             <div class="row">
                 <div class="col-sm-5">
                     <div class="row p-2">
                         <div class="col-sm text-center text-white bg-primary">
                             <div class="row">
                                 <div class="col-11">
-                                    <h5>REGISTRO DE CLIENTES</h5>
+                                    <h5>REGISTRO DE INSCRIPCIONES</h5>
                                 </div>
                                 <div class="col-1 align-middle" >
                                     <button type="button" onclick="appVue.forms['inscripcion'].mostrar=false" class="btn-close" aria-label="Close"></button>
@@ -178,7 +178,7 @@ Vue.component('component-inscripcion',{
                 <div class="col-sm"></div>
                 <div class="col-sm-6 p-2">
                     <div class="row text-center text-white bg-primary">
-                        <div class="col"><h5>CLIENTES REGISTRADOS</h5></div>
+                        <div class="col"><h5> INSCRIPCIONES REGISTRADOS</h5></div>
                     </div>
                     <div class="row">
                         <div class="col">
