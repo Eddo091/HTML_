@@ -1,3 +1,5 @@
+Vue.component('v-select-materias', VueSelect.VueSelect);
+
 Vue.component('component-alumnos',{
     data:()=>{
         return{
@@ -8,6 +10,11 @@ Vue.component('component-alumnos',{
           buscar : "",
           alumno:{
               idAlumno  : 0,
+              materia:{ 
+                  id:0,
+                  label:''
+
+            },
               codigo    : '',
               nombre    : '',
               dirección : '',
@@ -17,7 +24,8 @@ Vue.component('component-alumnos',{
               fechaNacimiento      : '',
               sexo      : ''
         }, 
-        alumno:[]
+        alumno:[],
+        materia:[]
 
     }
         
@@ -91,13 +99,24 @@ Vue.component('component-alumnos',{
             data.onsuccess=resp=>{
                 this.alumno = data.result;
             };
+            let storeMateria = this.abrirStore('tblmaterias','readonly'),
+            dataMateria= storeMateria.getAll();
+        this.materia = [];
+        dataMateria.onsuccess=resp=>{
+            dataMateria.result.forEach(element => {
+                this.materia.push({id:element.idMateria, label:element.materia});
+            });
+
+        };
         },
         mostrarAlumnos(alum){
-            this.alumno = pro;
+            this.alumno = alum;
             this.accion='modificar';
         },
         limpiar(){
             this.accion='nuevo';
+            this.alumno.materia.id=0;
+            this.alumno.materia.label="";
             this.alumno.idAlumno='';
             this.alumno.codigo='';
             this.alumno.nombre='';
@@ -141,6 +160,12 @@ Vue.component('component-alumnos',{
                      <h5>REGISTRO DE ALUMNO</h5>
                  </div>
              </div>
+             <div class="row p-2">
+                        <div class="col-sm">MATERIA:</div>
+                        <div class="col-sm">
+                            <v-select-materia v-model="alumno.materia" :options="materia" placeholder="Por favor seleccione la materia"/>
+                        </div>
+                    </div>
              <div class="row p-2">
                  <div class="col-sm">CODIGO:</div>
                  <div class="col-sm">
@@ -228,6 +253,7 @@ Vue.component('component-alumnos',{
                              </tr>
                              <!----------TABLA------->
                              <tr>
+                                 <th>MATERIA</th>
                                  <th>CODIGO</th>
                                  <th>NOMBRE</th>
                                  <th>DIRRECIÓN</th>
@@ -242,6 +268,7 @@ Vue.component('component-alumnos',{
                          <tbody>
                              <!----------ACCION DE LA TABLA------->
                              <tr v-for="alum in alumno" v-on:click="mostrarAlumnos(alum)">
+                                <td>{{ alum.materia.label }}</td>
                                  <td>{{alum.codigo }}</td>
                                  <td>{{alum.nombre }}</td>
                                  <td>{{alum.dirección }}</td>
