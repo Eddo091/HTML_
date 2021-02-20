@@ -7,7 +7,7 @@ Vue.component('component-inscripcion',{
             error  : false,
             buscar : "",
             inscripcion:{
-                idInscripcion : 0,
+                idInscrito : 0,
                 codigo    : '',
                 nombre    : '',
                 direccion : '',
@@ -45,7 +45,7 @@ Vue.component('component-inscripcion',{
             let store = this.abrirStore("tblinscripcion",'readwrite'),
                 duplicado = false;
             if( this.accion=='nuevo' ){
-                this.inscripcion.idInscripcion = generarIdUnicoDesdeFecha();
+                this.inscripcion.idInscrito = generarIdUnicoDesdeFecha();
                 
                 let data = await this.buscandoCodigoInscripcion(store);
                 duplicado = data.result!=undefined;
@@ -92,7 +92,7 @@ Vue.component('component-inscripcion',{
         },
         limpiar(){
             this.accion='nuevo';
-            this.inscripcion.idInscripcion='';
+            this.inscripcion.idInscrito='';
             this.inscripcion.codigo='';
             this.inscripcion.nombre='';
             this.inscripcion.direccion='';
@@ -102,7 +102,7 @@ Vue.component('component-inscripcion',{
         eliminarInscripcion(ins){
             if( confirm(`Esta seguro que desea eliminar el inscripcion:  ${ins.descripcion}`) ){
                 let store = this.abrirStore("tblinscripcion",'readwrite'),
-                    req = store.delete(ins.idInscripcion);
+                    req = store.delete(ins.idInscrito);
                 req.onsuccess=resp=>{
                     this.mostrarMsg('Registro eliminado con exito',true);
                     this.obtenerDatos();
