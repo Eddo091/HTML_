@@ -16,12 +16,12 @@ Vue.component('component-inscripcion',{
             },
             inscripcions:[],
             materias:[],
-            alumnos:[]
+            alumno:[]
         }
     },
     methods:{
         buscandoInscripcion(){
-            this.inscripcions = this.inscripcions.filter((element,index,inscripcions) => element.alumnos.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
+            this.inscripcions = this.inscripcions.filter((element,index,inscripcions) => element.alumno.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
             if( this.buscar.length<=0){
                 this.obtenerDatos();
             }
@@ -170,7 +170,7 @@ Vue.component('component-inscripcion',{
                     </div>
                     <div class="col-sm">ALUMNO:</div>
                  <div class="col-sm">
-                        <v-select-materia v-model="inscripcion.alumno" :options="alumno" placeholder="Por favor seleccione el alumno"/>
+                        <v-select-alumno v-model="inscripcion.alumno" :options="alumno" placeholder="Por favor seleccione el alumno"/>
                         </div>
                     </div>
                      <div class="col-sm">MATERIA:</div>
