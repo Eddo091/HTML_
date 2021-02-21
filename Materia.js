@@ -84,8 +84,8 @@ Vue.component('component-materias',{
                 this.materias = data.result;
             };
         },
-        mostrarMateria(ma){
-            this.materia = ma;
+        mostrarMateria(alum){
+            this.materia = alum;
             this.accion='modificar';
         },
         limpiar(){
@@ -95,10 +95,10 @@ Vue.component('component-materias',{
             this.materia.docente='';
             this.obtenerMaterias();
         },
-        eliminarMateria(ma){
-            if( confirm(`Esta seguro que desea eliminar el materia:  ${ma.docente}`) ){
+        eliminarMateria(alum){
+            if( confirm(`Esta seguro que desea eliminar el materia:  ${alum.docente}`) ){
                 let store = this.abrirStore("tblmaterias",'readwrite'),
-                    req = store.delete(ma.idMateria);
+                    req = store.delete(alum.idMateria);
                 req.onsuccess=resp=>{
                     this.mostrarMsg('Registro eliminado con exito',true);
                     this.obtenerMaterias();
@@ -180,11 +180,11 @@ Vue.component('component-materias',{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="ma in materias" v-on:click="mostrarMateria(ma)">
-                                        <td>{{ ma.codigo }}</td>
-                                        <td>{{ ma.docente }}</td>
+                                    <tr v-for="alum in materias" v-on:click="mostrarMateria(alum)">
+                                        <td>{{ alum.codigo }}</td>
+                                        <td>{{ alum.docente }}</td>
                                         <td>
-                                            <a @click.stop="eliminarMateria(ma)" class="btn btn-danger">DEL</a>
+                                            <a @click.stop="eliminarMateria(alum)" class="btn btn-danger">DEL</a>
                                         </td>
                                     </tr>
                                 </tbody>

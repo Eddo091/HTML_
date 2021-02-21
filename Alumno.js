@@ -162,11 +162,12 @@ Vue.component('component-alumnos',{
                  <div class="col-1 align-middle" >
                  <button type="button" onclick="appVue.forms['alumno'].mostrar=false" class="btn-close" aria-label="Close"></button>
              </div>
-             </div>
-             <div class="row p-2">
-                        <div class="col-sm">MATERIA:</div>
-                        <div class="col-sm">
-                            <v-select-materia v-model="alumno.materia" :options="materia" placeholder="Por favor seleccione la materia"/>
+
+        </div>
+        <div class="row p-2">
+                 <div class="col-sm">MATERIA:</div>
+                 <div class="col-sm">
+                        <v-select-materia v-model="alumno.materia" :options="materias" placeholder="Por favor seleccione la materia"/>
                         </div>
                     </div>
              <div class="row p-2">
@@ -256,7 +257,6 @@ Vue.component('component-alumnos',{
                              </tr>
                              <!----------TABLA------->
                              <tr>
-                                 <th>MATERIA</th>
                                  <th>CODIGO</th>
                                  <th>NOMBRE</th>
                                  <th>DIRRECIÓN</th>
@@ -265,13 +265,13 @@ Vue.component('component-alumnos',{
                                  <th>TELEFONO</th>
                                  <th>FECHA</th>
                                  <th>SEXO</th>
+                                 <th>MATERIA</th>
                                  <th></th>
                              </tr>
                          </thead>
                          <tbody>
                              <!----------ACCION DE LA TABLA------->
                              <tr v-for="alum in alumno" v-on:click="mostrarAlumnos(alum)">
-                                <td>{{ alum.materia.label }}</td>
                                  <td>{{alum.codigo }}</td>
                                  <td>{{alum.nombre }}</td>
                                  <td>{{alum.dirección }}</td>
@@ -280,7 +280,7 @@ Vue.component('component-alumnos',{
                                  <td>{{alum.telefono }}</td>
                                  <td>{{alum.fechaNacimiento}}</td>
                                  <td>{{alum.sexo}}</td>
-                                 
+                                 <td>{{alum.materia.label}}</td>
 
                                  <td>
                                      <!----------BOTONES TABLA------->

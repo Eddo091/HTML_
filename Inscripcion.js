@@ -1,3 +1,6 @@
+Vue.component('v-select-materias', VueSelect.VueSelect);
+Vue.component('v-select-alumnos', VueSelect.VueSelect);
+
 Vue.component('component-inscripcion',{
     data:()=>{
         return {
@@ -9,16 +12,16 @@ Vue.component('component-inscripcion',{
             inscripcion:{
                 idInscrito : 0,
                 codigo    : '',
-                nombre    : '',
-                direccion : '',
-                telefono  : '',
+                telefono  : ''
             },
-            inscripcions:[]
+            inscripcions:[],
+            materias:[],
+            alumnos:[]
         }
     },
     methods:{
         buscandoInscripcion(){
-            this.inscripcions = this.inscripcions.filter((element,index,inscripcions) => element.nombre.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
+            this.inscripcions = this.inscripcions.filter((element,index,inscripcions) => element.alumnos.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
             if( this.buscar.length<=0){
                 this.obtenerDatos();
             }
@@ -85,24 +88,46 @@ Vue.component('component-inscripcion',{
             data.onsuccess=resp=>{
                 this.inscripcion = data.result;
             };
+            let storeMateria = this.abrirStore('tblmaterias','readonly'),
+            dataMateria= storeMateria.getAll();
+        this.materia = [];
+        dataMateria.onsuccess=resp=>{
+            dataMateria.result.forEach(element => {
+                this.materia.push({id:element.idMateria, label:element.materia});
+            });
+
+        };
+        let storeAlumno = this.abrirStore('tblalumnos','readonly'),
+            dataAlumno= storeAlumno.getAll();
+        this.alumno = [];
+        dataAlumno.onsuccess=resp=>{
+            dataAlumno.result.forEach(element => {
+                this.alumno.push({id:element.idAlumno, label:element.alumno});
+            });
+
+        };
         },
-        mostrarInscripcion(ins){
-            this.inscripcion = ins;
+        mostrarInscripcion(alum){
+            this.inscripcion = alum;
             this.accion='modificar';
         },
         limpiar(){
             this.accion='nuevo';
+
+            this.inscripcion.materia.id=0;
+            this.inscripcion.materia.label="";
+            this.inscripcion.alumno.id=0;
+            this.inscripcion.alumno.label="";
+
             this.inscripcion.idInscrito='';
             this.inscripcion.codigo='';
-            this.inscripcion.nombre='';
-            this.inscripcion.direccion='';
             this.inscripcion.telefono='';
             this.obtenerDatos();
         },
-        eliminarInscripcion(ins){
-            if( confirm(`Esta seguro que desea eliminar el inscripcion:  ${ins.descripcion}`) ){
+        eliminarInscripcion(alum){
+            if( confirm(`Esta seguro que desea eliminar el inscripcion:  ${alum.codigo}`) ){
                 let store = this.abrirStore("tblinscripcion",'readwrite'),
-                    req = store.delete(ins.idInscrito);
+                    req = store.delete(alum.idInscrito);
                 req.onsuccess=resp=>{
                     this.mostrarMsg('Registro eliminado con exito',true);
                     this.obtenerDatos();
@@ -143,16 +168,14 @@ Vue.component('component-inscripcion',{
                             <input v-model="inscripcion.codigo" required type="text" class="form-control form-control-sm" >
                         </div>
                     </div>
-                    <div class="row p-2">
-                        <div class="col-sm">NOMBRE: </div>
-                        <div class="col-sm">
-                            <input v-model="inscripcion.nombre" required pattern="[A-ZÑña-z0-9, ]{5,65}" type="text" class="form-control form-control-sm">
+                    <div class="col-sm">ALUMNO:</div>
+                 <div class="col-sm">
+                        <v-select-materia v-model="inscripcion.alumno" :options="alumno" placeholder="Por favor seleccione el alumno"/>
                         </div>
                     </div>
-                    <div class="row p-2">
-                        <div class="col-sm">DIRECCION: </div>
-                        <div class="col-sm">
-                            <input v-model="inscripcion.direccion" required pattern="[A-ZÑña-z0-9, ]{5,65}" type="text" class="form-control form-control-sm">
+                     <div class="col-sm">MATERIA:</div>
+                 <div class="col-sm">
+                        <v-select-materia v-model="inscripcion.materia" :options="materias" placeholder="Por favor seleccione la materia"/>
                         </div>
                     </div>
                     <div class="row p-2">
@@ -191,20 +214,23 @@ Vue.component('component-inscripcion',{
                                     </tr>
                                     <tr>
                                         <th>CODIGO</th>
-                                        <th>NOMBRE</th>
-                                        <th>DIRECCION</th>
+                                        <th>ALUMNO</th>
+                                        <th>MATERIA</th>
                                         <th>TEL</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="ins in inscripcion" v-on:click="mostrarInscripcion(ins)">
-                                        <td>{{ ins.codigo }}</td>
-                                        <td>{{ ins.nombre }}</td>
-                                        <td>{{ ins.direccion }}</td>
-                                        <td>{{ ins.telefono }}</td>
+                                    <tr v-for="alum in inscripcion" v-on:click="mostrarInscripcion(alum)">
+                                        <td>{{ alum.inscripcion.codigo }}</td>
+
+                                        //Acá me da error
+                                        <td>{{ alum.nombre.label}}</td>
+                                        <td>{{ alum.materia.label}}</td>
+
+                                        <td>{{ alum.inscripcion.telefono}}</td>
                                         <td>
-                                            <a @click.stop="eliminarInscripcion(ins)" class="btn btn-danger">DEL</a>
+                                            <a @click.stop="eliminarInscripcion(alum)" class="btn btn-danger">DEL</a>
                                         </td>
                                     </tr>
                                 </tbody>
