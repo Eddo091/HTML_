@@ -133,6 +133,7 @@ Vue.component('component-materias',{
                             </div>
                         </div>
                     </div>
+                    <div class="input-group-prepend card bg-light">
                     <div class="row p-2">
                         <div class="col-sm">MATERIA:</div>
                         <div class="col-sm">
@@ -144,6 +145,7 @@ Vue.component('component-materias',{
                         <div class="col-sm">
                             <input v-model="materia.docente" required pattern="[A-ZÑña-z0-9, ]{5,65}" type="text" class="form-control form-control-sm">
                         </div>
+                    </div>
                     </div>
                     <div class="row p-2">
                         <div class="col-sm text-center">

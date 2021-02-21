@@ -14,14 +14,14 @@ Vue.component('component-inscripcion',{
                 codigo    : '',
                 telefono  : ''
             },
-            inscripcions:[],
+            inscripcion:[],
             materias:[],
             alumno:[]
         }
     },
     methods:{
         buscandoInscripcion(){
-            this.inscripcions = this.inscripcions.filter((element,index,inscripcions) => element.alumno.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
+            this.inscripcion = this.inscripcions.filter((element,index,inscripcion) => element.alumno.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 || element.codigo.toUpperCase().indexOf(this.buscar.toUpperCase())>=0 );
             if( this.buscar.length<=0){
                 this.obtenerDatos();
             }
@@ -162,20 +162,11 @@ Vue.component('component-inscripcion',{
                             </div>
                         </div>
                     </div>
+                    <div class="input-group-prepend card bg-light">
                     <div class="row p-2">
                         <div class="col-sm">CODIGO:</div>
                         <div class="col-sm">
                             <input v-model="inscripcion.codigo" required type="text" class="form-control form-control-sm" >
-                        </div>
-                    </div>
-                    <div class="col-sm">ALUMNO:</div>
-                 <div class="col-sm">
-                        <v-select-alumno v-model="inscripcion.alumno" :options="alumno" placeholder="Por favor seleccione el alumno"/>
-                        </div>
-                    </div>
-                     <div class="col-sm">MATERIA:</div>
-                 <div class="col-sm">
-                        <v-select-materia v-model="inscripcion.materia" :options="materias" placeholder="Por favor seleccione la materia"/>
                         </div>
                     </div>
                     <div class="row p-2">
@@ -183,6 +174,19 @@ Vue.component('component-inscripcion',{
                         <div class="col-sm">
                             <input v-model="inscripcion.telefono" required pattern="[0-9]{4}-[0-9]{4}" type="text" class="form-control form-control-sm">
                         </div>
+                    </div>
+
+                    <div class="col-sm">ALUMNO:</div>
+                 <div class="col-sm">
+                        <v-select-alumno v-model="inscripcion.alumno" :options="alumno" placeholder="Por favor seleccione el alumno"/>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm">MATERIA:</div>
+                 <div class="col-sm">
+                        <v-select-materia v-model="inscripcion.materia" :options="materias" placeholder="Por favor seleccione la materia"/>
+                        </div>
+                    </div>
                     </div>
                     <div class="row p-2">
                         <div class="col-sm text-center">
@@ -223,11 +227,8 @@ Vue.component('component-inscripcion',{
                                 <tbody>
                                     <tr v-for="alum in inscripcion" v-on:click="mostrarInscripcion(alum)">
                                         <td>{{ alum.inscripcion.codigo }}</td>
-
-                                        //Acá me da error
                                         <td>{{ alum.nombre.label}}</td>
                                         <td>{{ alum.materia.label}}</td>
-
                                         <td>{{ alum.inscripcion.telefono}}</td>
                                         <td>
                                             <a @click.stop="eliminarInscripcion(alum)" class="btn btn-danger">DEL</a>

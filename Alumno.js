@@ -164,6 +164,7 @@ Vue.component('component-alumnos',{
              </div>
 
         </div>
+        <div class="input-group-prepend card bg-light">
         <div class="row p-2">
                  <div class="col-sm">MATERIA:</div>
                  <div class="col-sm">
@@ -220,7 +221,7 @@ Vue.component('component-alumnos',{
                      <input v-model="alumno.sexo" required pattern= "[F/M f/m]{1}" type="text" type="text" class="form-control form-control-sm" placeholder="M/F">
                  </div>
              </div>
-
+            </div>
 <!----------BOTONES GUARDAR,LIMPIAR,MODIFICAR, ELIMINAR------->
              <div class="row p-2">
                  <div class="col-sm text-center">
