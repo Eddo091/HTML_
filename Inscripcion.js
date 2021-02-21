@@ -164,11 +164,15 @@ Vue.component('component-inscripcion',{
                     </div>
                     <div class="input-group-prepend card bg-light">
                     <div class="row p-2">
-                        <div class="col-sm">CODIGO:</div>
+                        <div class="col-sm">CODIGO DE INSCRIPCION:</div>
                         <div class="col-sm">
                             <input v-model="inscripcion.codigo" required type="text" class="form-control form-control-sm" >
                         </div>
                     </div>
+                    <div class="col-sm">ALUMNO:</div>
+                    <div class="col-sm">
+                           <v-select-alumnos v-model="inscripcion.alumno" :options="alumno" placeholder="Por favor seleccione el alumno"/>
+                           </div>
                     <div class="row p-2">
                         <div class="col-sm">TEL: </div>
                         <div class="col-sm">
@@ -176,20 +180,17 @@ Vue.component('component-inscripcion',{
                         </div>
                     </div>
 
-                    <div class="col-sm">ALUMNO:</div>
-                 <div class="col-sm">
-                        <v-select-alumno v-model="inscripcion.alumno" :options="alumno" placeholder="Por favor seleccione el alumno"/>
-                        </div>
-                    </div>
+               
                     
                     <div class="col-sm">MATERIA:</div>
-                 <div class="col-sm">
-                        <v-select-materia v-model="inscripcion.materia" :options="materias" placeholder="Por favor seleccione la materia"/>
+                 <div class="col-xs">
+                        <v-select-materias v-model="inscripcion.materia" :options="materias" placeholder="Por favor seleccione la materia"/>
                         </div>
-                    </div>
+                    
+                    
                     </div>
                     <div class="row p-2">
-                        <div class="col-sm text-center">
+                        <div class="col-sm">
                             <input type="submit" value="Guardar" class="btn btn-dark">
                             <input type="reset" value="Limpiar" class="btn btn-warning">
                         </div>
@@ -201,6 +202,7 @@ Vue.component('component-inscripcion',{
                             </div>
                         </div>
                     </div>
+                
                 </div>
                 <div class="col-sm"></div>
                 <div class="col-sm-6 p-2">

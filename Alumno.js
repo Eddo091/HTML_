@@ -168,7 +168,7 @@ Vue.component('component-alumnos',{
         <div class="row p-2">
                  <div class="col-sm">MATERIA:</div>
                  <div class="col-sm">
-                        <v-select-materia v-model="alumno.materia" :options="materias" placeholder="Por favor seleccione la materia"/>
+                        <v-select-materias v-model="alumno.materia" :options="materias" placeholder="Por favor seleccione la materia"/>
                         </div>
                     </div>
              <div class="row p-2">
