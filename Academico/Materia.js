@@ -91,6 +91,7 @@ Vue.component('component-materias',{
         limpiar(){
             this.materia.accion='nuevo';
             this.materia.idMateria='';
+            this.materia.materia='';
             this.materia.codigo='';
             this.materia.docente='';
             this.obtenerMaterias();

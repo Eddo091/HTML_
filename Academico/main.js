@@ -13,7 +13,7 @@ var appVue = new Vue({
     },
     methods:{
         abrirBd(){
-            let indexDb = indexedDB.open('db_sistema_facturacion',1);
+            let indexDb = indexedDB.open('db_academica_alumnos',1);
             indexDb.onupgradeneeded=event=>{
                 let req=event.target.result,
                     tblalumnos = req.createObjectStore('tblalumnos',{keyPath:'idAlumno'}),
