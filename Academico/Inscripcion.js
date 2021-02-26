@@ -12,7 +12,7 @@ Vue.component('component-inscripcion',{
             inscripcion:{
                 idInscrito : 0,
                 codigo    : '',
-                telefono  : ''
+                fechainscripcion : ''
             },
             inscripcion:[],
             materias:[],
@@ -121,7 +121,7 @@ Vue.component('component-inscripcion',{
 
             this.inscripcion.idInscrito='';
             this.inscripcion.codigo='';
-            this.inscripcion.telefono='';
+            this.inscripcion.fechainscripcion='';
             this.obtenerDatos();
         },
         eliminarInscripcion(alum){
@@ -174,11 +174,12 @@ Vue.component('component-inscripcion',{
                            <v-select-alumnos v-model="inscripcion.alumno" :options="alumno" placeholder="Por favor seleccione el alumno"/>
                            </div>
                     <div class="row p-2">
-                        <div class="col-sm">TEL: </div>
-                        <div class="col-sm">
-                            <input v-model="inscripcion.telefono" required pattern="[0-9]{4}-[0-9]{4}" type="text" class="form-control form-control-sm">
-                        </div>
-                    </div>
+                    <div class="row p-2">
+                    <div div class="col-sm">FECHA DE INSCRIPCION:</div>
+                    <div class="col-sm">
+                        <input v-model="alumno.fechainscripcion" required pattern="{0000-00-00}"  type="date" class="form-control form-control-sm">
+                </div>
+            </div>
 
                
                     
@@ -222,7 +223,7 @@ Vue.component('component-inscripcion',{
                                         <th>CODIGO</th>
                                         <th>ALUMNO</th>
                                         <th>MATERIA</th>
-                                        <th>TEL</th>
+                                        <th>FECHA INSCRIPCION</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -231,7 +232,7 @@ Vue.component('component-inscripcion',{
                                         <td>{{ alum.inscripcion.codigo }}</td>
                                         <td>{{ alum.nombre.label}}</td>
                                         <td>{{ alum.materia.label}}</td>
-                                        <td>{{ alum.inscripcion.telefono}}</td>
+                                        <td>{{ alum.inscripcion.fechainscripcion}}</td>
                                         <td>
                                             <a @click.stop="eliminarInscripcion(alum)" class="btn btn-danger">DEL</a>
                                         </td>

@@ -1,14 +1,16 @@
 Vue.component('component-materias',{
     data:()=>{
         return {
-            accion : 'nuevo',
+            
             msg    : '',
             status : false,
             error  : false,
             buscar : "",
             materia:{
+                accion : 'nuevo',
                 idMateria  : 0,
                 materia      : '',
+                codigo      : '',
                 docente : ''
             },
             materias:[]
@@ -42,26 +44,24 @@ Vue.component('component-materias',{
              */
             let store = this.abrirStore("tblmaterias",'readwrite'),
                 duplicado = false;
-            if( this.accion=='nuevo' ){
+            if( this.Materia.accion=='nuevo' ){
                 this.materia.idMateria = generarIdUnicoDesdeFecha();
                 
                 let data = await this.buscandoCodigoMateria(store);
                 duplicado = data.result!=undefined;
             }
-            if( duplicado==false){
-                let query = store.put(this.materia);
-                query.onsuccess=event=>{
-                    this.obtenerMaterias();
-                    this.limpiar();
-                    
-                    this.mostrarMsg('Registro se guardo con exito',false);
-                };
-                query.onerror=event=>{
-                    this.mostrarMsg('Error al guardar el registro',true);
-                    console.log( event );
-                };
+            if( duplicado==false && this.materia.codigo.trim()!=""){
+                fetch(`private/modulos/materias/administracion.php?materia=${JSON.stringify(this.materia)}`,
+                    {credentials: 'same-origin'})
+                    .then(resp=>resp.json())
+                    .then(resp=>{
+                        this.obtenerDatos();
+                        this.limpiar();
+
+                        this.mostrarMsg('Registro se guardo con exito',false);
+                    });
             } else{
-                this.mostrarMsg('Codigo de materia duplicado',true);
+                this.mostrarMsg('Codigo de materia duplicado, o vacio',true);
             }
         },
         mostrarMsg(msg, error){
@@ -86,10 +86,10 @@ Vue.component('component-materias',{
         },
         mostrarMateria(alum){
             this.materia = alum;
-            this.accion='modificar';
+            this.materia.accion='modificar';
         },
         limpiar(){
-            this.accion='nuevo';
+            this.materia.accion='nuevo';
             this.materia.idMateria='';
             this.materia.codigo='';
             this.materia.docente='';
@@ -97,17 +97,18 @@ Vue.component('component-materias',{
         },
         eliminarMateria(alum){
             if( confirm(`Esta seguro que desea eliminar el materia:  ${alum.docente}`) ){
-                let store = this.abrirStore("tblmaterias",'readwrite'),
-                    req = store.delete(alum.idMateria);
-                req.onsuccess=resp=>{
-                    this.mostrarMsg('Registro eliminado con exito',true);
-                    this.obtenerMaterias();
-                };
-                req.onerror=resp=>{
-                    this.mostrarMsg('Error al eliminar el registro',true);
-                    console.log( resp );
-                };
-            }
+                this.materia = alum;
+                this.materia.accion = "eliminar";
+                fetch(`private/modulos/materias/administracion.php?materia=${JSON.stringify(this.materia)}`,
+                    {credentials: 'same-origin'})
+                    .then(resp=>resp.json())
+                    .then(resp=>{
+                        this.obtenerDatos();
+                        this.limpiar();
+
+                        this.mostrarMsg('Registro se eliminno con exito',true);
+                    });
+                }
         },
         abrirStore(store,modo){
             let tx = db.transaction(store,modo);
@@ -138,6 +139,12 @@ Vue.component('component-materias',{
                         <div class="col-sm">MATERIA:</div>
                         <div class="col-sm">
                             <input v-model="materia.materia" required type="text" class="form-control form-control-sm" >
+                        </div>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-sm">CODIGO:</div>
+                        <div class="col-sm">
+                            <input v-model="materia.codigo" required type="text" class="form-control form-control-sm" >
                         </div>
                     </div>
                     <div class="row p-2">
@@ -176,13 +183,15 @@ Vue.component('component-materias',{
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>MATERIA</th>
                                         <th>CODIGO</th>
-                                        <th>DESCRIPCION</th>
+                                        <th>DOCENTE</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="alum in materias" v-on:click="mostrarMateria(alum)">
+                                        <td>{{ alum.materia }}</td>
                                         <td>{{ alum.codigo }}</td>
                                         <td>{{ alum.docente }}</td>
                                         <td>
@@ -196,5 +205,7 @@ Vue.component('component-materias',{
                 </div>
             </div>
         </form>
-    `
+  
+            `
+
 });
