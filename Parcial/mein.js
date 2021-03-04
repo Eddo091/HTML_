@@ -6,29 +6,25 @@ var appVue = new Vue({
     el:'#appSistema',
     data:{
         forms:{
-            'materia':{mostrar:false},
-            'alumno':{mostrar:false},
-            'inscripcion':{mostrar:false},
+            'Lectura':{mostrar:false},
+            'Cliente':{mostrar:false},
+    
         }
     },
     methods:{
         abrirBd(){
-            let indexDb = indexedDB.open('db_academica_alumnos',1);
+            let indexDb = indexedDB.open('db_sistema_agua_potable',1);
             indexDb.onupgradeneeded=event=>{
                 let req=event.target.result,
-                    tblclientes = req.createObjectStore('tblclientes',{keyPath:'idAlumno'}),
-                    tblmaterias = req.createObjectStore('tblmaterias',{keyPath:'idMateria'}),
-                    tblinscripcion = req.createObjectStore('tblinscripcion',{keyPath:'idInscrito'})
-                tblclientes.createIndex('idAlumno','idAlumno',{unique:true});
+                    tblclientes = req.createObjectStore('tblClientes',{keyPath:'idClientes'}),
+                    tbllecturas = req.createObjectStore('tbllecturas',{keyPath:'idLectura'})
+                    
+                tblclientes.createIndex('idClientes','idClientes',{unique:true});
                 tblclientes.createIndex('codigo','codigo',{unique:false});
                 tblclientes.createIndex('id','id',{unique:false});
                 
-                tblmaterias.createIndex('idMateria','idMateria',{unique:true});
-                tblmaterias.createIndex('codigo','codigo',{unique:false});
-
-                tblinscripcion.createIndex('idInscrito','idInscrito',{unique:true});
-                tblinscripcion.createIndex('codigo','codigo',{unique:false});
-
+                tbllecturas.createIndex('idLectura','idLectura',{unique:true});
+                tbllecturas.createIndex('codigo','codigo',{unique:false});
                 
             };
             indexDb.onsuccess = evt=>{
