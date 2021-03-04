@@ -6,8 +6,8 @@ var appVue = new Vue({
     el:'#appSistema',
     data:{
         forms:{
-            'Lectura':{mostrar:false},
-            'Cliente':{mostrar:false},
+            'lectura':{mostrar:false},
+            'cliente':{mostrar:false},
     
         }
     },
@@ -16,9 +16,8 @@ var appVue = new Vue({
             let indexDb = indexedDB.open('db_sistema_agua_potable',1);
             indexDb.onupgradeneeded=event=>{
                 let req=event.target.result,
-                    tblclientes = req.createObjectStore('tblClientes',{keyPath:'idClientes'}),
-                    tbllecturas = req.createObjectStore('tbllecturas',{keyPath:'idLectura'})
-                    
+                    tblclientes = req.createObjectStore('tblclientes',{keyPath:'idclientes'}),
+                    tbllecturas = req.createObjectStore('tbllecturas',{keyPath:'idlectura'})
                 tblclientes.createIndex('idClientes','idClientes',{unique:true});
                 tblclientes.createIndex('codigo','codigo',{unique:false});
                 tblclientes.createIndex('id','id',{unique:false});

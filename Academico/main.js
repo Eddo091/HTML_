@@ -16,12 +16,12 @@ var appVue = new Vue({
             let indexDb = indexedDB.open('db_academica_alumnos',1);
             indexDb.onupgradeneeded=event=>{
                 let req=event.target.result,
-                    tblclientes = req.createObjectStore('tblclientes',{keyPath:'idAlumno'}),
+                    tblalumnos = req.createObjectStore('tblalumnos',{keyPath:'idAlumno'}),
                     tblmaterias = req.createObjectStore('tblmaterias',{keyPath:'idMateria'}),
                     tblinscripcion = req.createObjectStore('tblinscripcion',{keyPath:'idInscrito'})
-                tblclientes.createIndex('idAlumno','idAlumno',{unique:true});
-                tblclientes.createIndex('codigo','codigo',{unique:false});
-                tblclientes.createIndex('id','id',{unique:false});
+                tblalumnos.createIndex('idAlumno','idAlumno',{unique:true});
+                tblalumnos.createIndex('codigo','codigo',{unique:false});
+                tblalumnos.createIndex('id','id',{unique:false});
                 
                 tblmaterias.createIndex('idMateria','idMateria',{unique:true});
                 tblmaterias.createIndex('codigo','codigo',{unique:false});

@@ -1,4 +1,4 @@
-Vue.component('component-Clientes',{
+Vue.component('component-clientes',{
     data:()=>{
         return{
           msg    : '',
@@ -17,7 +17,7 @@ Vue.component('component-Clientes',{
               dirección : '',
               zona: ''
         }, 
-        clientes:[],
+        clientes:[]
 
     }
         
@@ -165,18 +165,6 @@ Vue.component('component-Clientes',{
                  </div>
              </div>
              <div class="row p-2">
-                 <div class="col-sm">MUNICIPIO: </div>
-                 <div class="col-sm">
-                     <input v-model="cliente.Municipio" required pattern="[A-ZÑña-z0-9, ]{5,15}" type="text" class="form-control form-control-sm"  placeholder="Ejem: Usulután">
-                 </div>
-             </div>
-             <div class="row p-2">
-                 <div class="col-sm">DEPARTAMENTO: </div>
-                 <div class="col-sm">
-                     <input v-model="cliente.Departamento" required pattern="[A-ZÑña-z0-9, ]{5,15}" type="text" class="form-control form-control-sm" placeholder="Ejem: Usulután">
-                 </div>
-             </div>
-             <div class="row p-2">
                  <div class="col-sm">ZONA: </div>
                  <div class="col-sm">
                      <input v-model="cliente.zona" required pattern="[0-9]{4}-[0-9]{4}"  type="text" class="form-control form-control-sm"  placeholder="Ejem: 1234-5678">
@@ -224,8 +212,6 @@ Vue.component('component-Clientes',{
                                  <th>CODIGO</th>
                                  <th>NOMBRE</th>
                                  <th>DIRRECIÓN</th>
-                                 <th>MUNICIPIO</th>
-                                 <th>DEPARTAMENTO</th>
                                  <th>ZONA</th>
                                  
                                  <th></th>
@@ -237,8 +223,6 @@ Vue.component('component-Clientes',{
                                  <td>{{cliente.codigo }}</td>
                                  <td>{{cliente.nombre }}</td>
                                  <td>{{cliente.dirección }}</td>
-                                 <td>{{cliente.municipio }}</td>
-                                 <td>{{cliente.departamento }}</td>
                                  <td>{{cliente.zona }}</td>
 
                                  <td>

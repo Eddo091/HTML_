@@ -1,4 +1,4 @@
-Vue.component('v-select-Clientes', VueSelect.VueSelect);
+Vue.component('v-select-clientes', VueSelect.VueSelect);
 
 Vue.component('component-lecturas',{
     data:()=>{
