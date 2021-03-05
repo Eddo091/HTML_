@@ -6,12 +6,8 @@ Vue.component('component-clientes',{
           error  : false,
           buscar : "",
           clientes:{
+              accion : 'nuevo',
               idClientes  : 0,
-              lectura:{ 
-                  id:0,
-                  label:''
-
-            },
               codigo    : '',
               nombre    : '',
               dirección : '',

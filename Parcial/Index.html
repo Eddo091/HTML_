@@ -16,23 +16,23 @@
       <!-- NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="Index.html">Primer Parcial</a>
+          <a class="navbar-brand" href="#">Primer Parcial</a>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-                <a class="nav-link mostrar" data-form="cliente" href="#"> Clientes</a>
+                <a class="nav-link mostrar" data-form="Clientes" href="#"> Clientes</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link mostrar"  data-form="lectura" href="#">Lecturas</a>
+                <a class="nav-link mostrar"  data-form="Lecturas" href="#">Lecturas</a>
               </li>
             </ul>
           </div>
-        
+        </div>
         </div>
       </nav>
 
     <div id="appSistema" class="container-fluid">
-        <component-clientes  ref="Cliente" v-show="forms['cliente'].mostrar"></component-clientes>
-        <component-lecturas  ref="Lecturas" v-show="forms['lectura'].mostrar"></component-lecturas>
+      <component-lecturas ref="Lecturas" v-show="forms['Lecturas'].mostrar"></component-lecturas>  
+      <component-clientes ref="Cliente" v-show="forms['Clientes'].mostrar"></component-clientes>
         
     </div>
     

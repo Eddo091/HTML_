@@ -6,8 +6,8 @@ var appVue = new Vue({
     el:'#appSistema',
     data:{
         forms:{
-            'lectura':{mostrar:false},
-            'cliente':{mostrar:false},
+            'lecturas':{mostrar:false},
+            'clientes':{mostrar:false},
     
         }
     },

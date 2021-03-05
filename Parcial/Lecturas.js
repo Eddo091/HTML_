@@ -10,7 +10,7 @@ Vue.component('component-lecturas',{
             buscar : "",
             lecturas:{
                 idLectura  : 0,
-                lectura:{ 
+                clientes:{ 
                     id:0,
                     label:''
   
